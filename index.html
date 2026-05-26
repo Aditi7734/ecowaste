@@ -1,0 +1,704 @@
+# Single File EcoCycle Website (index.html)
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EcoCycle Waste Management</title>
+
+  <style>
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: #f5fff7;
+      color: #222;
+      overflow-x: hidden;
+    }
+
+    /* Navbar */
+    .navbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px 8%;
+      background: rgba(13, 92, 47, 0.95);
+      position: fixed;
+      width: 100%;
+      top: 0;
+      z-index: 1000;
+      backdrop-filter: blur(10px);
+    }
+
+    .logo {
+      color: white;
+      font-size: 34px;
+      font-weight: bold;
+      letter-spacing: 1px;
+    }
+
+    .nav-links {
+      display: flex;
+      list-style: none;
+      gap: 30px;
+    }
+
+    .nav-links a {
+      color: white;
+      text-decoration: none;
+      font-size: 18px;
+      transition: 0.3s;
+      position: relative;
+    }
+
+    .nav-links a::after {
+      content: '';
+      position: absolute;
+      width: 0;
+      height: 2px;
+      background: #8cffb0;
+      left: 0;
+      bottom: -5px;
+      transition: 0.4s;
+    }
+
+    .nav-links a:hover::after {
+      width: 100%;
+    }
+
+    /* Hero */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 120px 8% 50px;
+      gap: 50px;
+      background: linear-gradient(135deg, #0d5c2f, #28a745);
+      color: white;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      width: 500px;
+      height: 500px;
+      background: rgba(255,255,255,0.08);
+      border-radius: 50%;
+      top: -100px;
+      right: -100px;
+      animation: pulse 6s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        transform: scale(1);
+      }
+
+      50% {
+        transform: scale(1.2);
+      }
+
+      100% {
+        transform: scale(1);
+      }
+    }
+
+    .hero-text {
+      animation: fadeUp 1.2s ease;
+      z-index: 2;
+    }
+
+    .hero-text h2 {
+      font-size: 65px;
+      margin-bottom: 20px;
+      line-height: 1.2;
+    }
+
+    .hero-text p {
+      font-size: 20px;
+      margin-bottom: 30px;
+      line-height: 1.7;
+      max-width: 600px;
+    }
+
+    .hero button {
+      padding: 16px 40px;
+      border: none;
+      border-radius: 50px;
+      background: white;
+      color: #0d5c2f;
+      font-size: 18px;
+      cursor: pointer;
+      transition: 0.4s;
+      font-weight: bold;
+    }
+
+    .hero button:hover {
+      transform: scale(1.1) translateY(-5px);
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+
+    .hero-image img {
+      width: 520px;
+      border-radius: 30px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+      animation: float 4s ease-in-out infinite;
+      z-index: 2;
+      position: relative;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0px);
+      }
+
+      50% {
+        transform: translateY(-20px);
+      }
+
+      100% {
+        transform: translateY(0px);
+      }
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(60px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    /* Section */
+    section {
+      padding: 100px 8%;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 48px;
+      color: #0d5c2f;
+      margin-bottom: 70px;
+    }
+
+    /* Cards */
+    .card-container {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 35px;
+    }
+
+    .card {
+      background: white;
+      width: 340px;
+      border-radius: 30px;
+      overflow: hidden;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+      transition: 0.5s;
+      transform: translateY(50px);
+      opacity: 0;
+    }
+
+    .card.active {
+      transform: translateY(0);
+      opacity: 1;
+    }
+
+    .card:hover {
+      transform: translateY(-15px) scale(1.04);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+    }
+
+    .card img {
+      width: 100%;
+      height: 240px;
+      object-fit: cover;
+    }
+
+    .card-content {
+      padding: 25px;
+    }
+
+    .card h3 {
+      color: #0d5c2f;
+      font-size: 28px;
+      margin-bottom: 15px;
+    }
+
+    .card p {
+      line-height: 1.7;
+      margin-bottom: 20px;
+    }
+
+    .card button {
+      padding: 12px 25px;
+      border: none;
+      background: #0d5c2f;
+      color: white;
+      border-radius: 30px;
+      cursor: pointer;
+      transition: 0.3s;
+    }
+
+    .card button:hover {
+      background: #28a745;
+      transform: scale(1.05);
+    }
+
+    /* About */
+    .about {
+      display: flex;
+      align-items: center;
+      gap: 60px;
+      background: #e9fff0;
+    }
+
+    .about img {
+      width: 500px;
+      border-radius: 30px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.15);
+    }
+
+    .about-text h2 {
+      font-size: 48px;
+      color: #0d5c2f;
+      margin-bottom: 20px;
+    }
+
+    .about-text p {
+      line-height: 1.8;
+      margin-bottom: 15px;
+      font-size: 18px;
+    }
+
+    /* Contact */
+    .contact {
+      background: linear-gradient(135deg, #0d5c2f, #1f8f4d);
+      color: white;
+      text-align: center;
+    }
+
+    .contact h2 {
+      font-size: 48px;
+      margin-bottom: 40px;
+    }
+
+    form {
+      max-width: 650px;
+      margin: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    input,
+    textarea,
+    select {
+      padding: 18px;
+      border: none;
+      border-radius: 15px;
+      font-size: 16px;
+    }
+
+    textarea {
+      height: 150px;
+    }
+
+    form button {
+      padding: 18px;
+      border: none;
+      border-radius: 40px;
+      background: white;
+      color: #0d5c2f;
+      font-size: 18px;
+      font-weight: bold;
+      cursor: pointer;
+      transition: 0.4s;
+    }
+
+    form button:hover {
+      transform: scale(1.05);
+    }
+
+    /* Footer */
+        /* Popup */
+    .popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.7);
+      display: none;
+      justify-content: center;
+      align-items: center;
+      z-index: 2000;
+      padding: 20px;
+    }
+
+    .popup-content {
+      background: white;
+      width: 100%;
+      max-width: 600px;
+      border-radius: 25px;
+      padding: 40px;
+      position: relative;
+      animation: fadeUp 0.5s ease;
+    }
+
+    .popup-content h2 {
+      color: #0d5c2f;
+      margin-bottom: 25px;
+      text-align: center;
+    }
+
+    .close-btn {
+      position: absolute;
+      right: 20px;
+      top: 15px;
+      font-size: 35px;
+      cursor: pointer;
+      color: #0d5c2f;
+    }
+
+    .popup form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .popup button {
+      background: #0d5c2f;
+      color: white;
+    }
+
+    /* Footer */
+    footer {
+      background: #062414;
+      color: white;
+      text-align: center;
+      padding: 25px;
+    }
+
+    /* Responsive */
+    @media(max-width: 950px) {
+
+      .hero,
+      .about {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .hero-text h2 {
+        font-size: 42px;
+      }
+
+      .hero-image img,
+      .about img {
+        width: 100%;
+      }
+
+      .navbar {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .nav-links {
+        gap: 15px;
+      }
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <h1 class="logo">EcoCycle</h1>
+
+    <ul class="nav-links">
+      <li><a href="#home">Home</a></li>
+      <li><a href="#categories">Categories</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+  </nav>
+
+  <!-- Hero -->
+  <section class="hero" id="home">
+
+    <div class="hero-text">
+      <h2>Clean Earth Starts With Smart Waste Management</h2>
+
+      <p>
+        EcoCycle helps manage plastic waste, clothing waste, and e-waste
+        using sustainable and eco-friendly recycling solutions.
+      </p>
+
+      <button>Explore Services</button>
+    </div>
+
+    <div class="hero-image">
+      <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?q=80&w=1200&auto=format&fit=crop" alt="EcoCycle">
+    </div>
+
+  </section>
+
+  <!-- Categories -->
+  <section id="categories">
+
+    <h2 class="section-title">Waste Categories</h2>
+
+    <div class="card-container">
+
+      <div class="card reveal">
+        <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?q=80&w=1200&auto=format&fit=crop">
+
+        <div class="card-content">
+          <h3>Plastic Waste</h3>
+          <p>Recycle bottles, packaging, and containers responsibly.</p>
+          <button>Learn More</button>
+        </div>
+      </div>
+
+      <div class="card reveal">
+        <img src="https://images.unsplash.com/photo-1489987707025-afc232f7ea0f?q=80&w=1200&auto=format&fit=crop">
+
+        <div class="card-content">
+          <h3>Clothing Waste</h3>
+          <p>Reduce textile pollution by recycling or donating clothes.</p>
+          <button>Learn More</button>
+        </div>
+      </div>
+
+      <div class="card reveal">
+        <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?q=80&w=1200&auto=format&fit=crop">
+
+        <div class="card-content">
+          <h3>E-Waste</h3>
+          <p>Dispose of electronics safely using modern recycling methods.</p>
+          <button>Learn More</button>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- About -->
+  <section class="about" id="about">
+
+    <img src="https://images.unsplash.com/photo-1497436072909-60f360e1d4b1?q=80&w=1200&auto=format&fit=crop">
+
+    <div class="about-text">
+      <h2>About EcoCycle</h2>
+
+      <p>
+        EcoCycle is a modern waste management platform helping communities
+        recycle waste effectively.
+      </p>
+
+      <p>
+        Our goal is to reduce pollution and build a cleaner future through
+        responsible waste management.
+      </p>
+    </div>
+
+  </section>
+
+    <!-- Collection Services -->
+  <section id="collection">
+
+    <h2 class="section-title">Collection & Donation Services</h2>
+
+    <div class="card-container">
+
+      <div class="card reveal">
+        <img src="https://images.unsplash.com/photo-1520607162513-77705c0f0d4a?q=80&w=1200&auto=format&fit=crop">
+
+        <div class="card-content">
+          <h3>Donate Waste Items</h3>
+          <p>
+            Donate reusable clothes, electronics, and plastic items to support
+            recycling communities and NGOs.
+          </p>
+
+          <button onclick="openPopup('donate')">Donate Now</button>
+        </div>
+      </div>
+
+      <div class="card reveal">
+        <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=1200&auto=format&fit=crop">
+
+        <div class="card-content">
+          <h3>Sell Recyclable Waste</h3>
+          <p>
+            Sell plastic waste, old clothes, and electronic devices directly
+            for recycling and earn rewards.
+          </p>
+
+          <button onclick="openPopup('sell')">Sell Items</button>
+        </div>
+      </div>
+
+      <div class="card reveal">
+        <img src="https://images.unsplash.com/photo-1504307651254-35680f356dfd?q=80&w=1200&auto=format&fit=crop">
+
+        <div class="card-content">
+          <h3>Schedule Pickup</h3>
+          <p>
+            Book doorstep collection services for bulk recyclable waste and
+            unwanted products.
+          </p>
+
+          <button onclick="openPopup('pickup')">Book Pickup</button>
+        </div>
+      </div>
+
+    </div>
+
+  </section>
+
+  <!-- Popup Form -->
+  <div class="popup" id="popupForm">
+
+    <div class="popup-content">
+
+      <span class="close-btn" onclick="closePopup()">&times;</span>
+
+      <h2 id="popupTitle">Service Form</h2>
+
+      <form>
+        <input type="text" placeholder="Your Name" required>
+
+        <input type="email" placeholder="Your Email" required>
+
+        <select>
+          <option>Select Waste Type</option>
+          <option>Plastic Waste</option>
+          <option>Clothing Waste</option>
+          <option>E-Waste</option>
+        </select>
+
+        <input type="text" placeholder="Pickup Address">
+
+        <textarea placeholder="Describe your items"></textarea>
+
+        <button type="submit">Submit Request</button>
+      </form>
+
+    </div>
+
+  </div>
+
+  <!-- Contact -->
+  <section class="contact" id="contact">
+
+    <h2>Contact Us</h2>
+
+    <form>
+      <input type="text" placeholder="Your Name">
+      <input type="email" placeholder="Your Email">
+
+      <select>
+        <option>Select Waste Category</option>
+        <option>Plastic Waste</option>
+        <option>Clothing Waste</option>
+        <option>E-Waste</option>
+      </select>
+
+      <textarea placeholder="Your Message"></textarea>
+
+      <button type="submit">Submit</button>
+    </form>
+
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <p>© 2026 EcoCycle Waste Management</p>
+  </footer>
+
+
+  <script>
+
+    // Reveal Animation
+    window.addEventListener('scroll', reveal);
+
+    function reveal() {
+
+      let reveals = document.querySelectorAll('.reveal');
+
+      for(let i = 0; i < reveals.length; i++) {
+
+        let windowHeight = window.innerHeight;
+        let elementTop = reveals[i].getBoundingClientRect().top;
+        let elementVisible = 100;
+
+        if(elementTop < windowHeight - elementVisible) {
+          reveals[i].classList.add('active');
+        }
+      }
+    }
+
+    reveal();
+
+    // Popup Logic
+    function openPopup(type) {
+
+      const popup = document.getElementById('popupForm');
+      const title = document.getElementById('popupTitle');
+
+      popup.style.display = 'flex';
+
+      if(type === 'donate') {
+        title.innerText = 'Donate Waste Items';
+      }
+
+      else if(type === 'sell') {
+        title.innerText = 'Sell Recyclable Waste';
+      }
+
+      else {
+        title.innerText = 'Schedule Waste Pickup';
+      }
+    }
+
+    function closePopup() {
+      document.getElementById('popupForm').style.display = 'none';
+    }
+
+    window.onclick = function(event) {
+
+      const popup = document.getElementById('popupForm');
+
+      if(event.target === popup) {
+        popup.style.display = 'none';
+      }
+    }
+
+
+  </script>
+
+</body>
+</html>
+```
+
+---
+
