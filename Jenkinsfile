@@ -24,7 +24,7 @@ pipeline {
 
         stage('Run New Container') {
             steps {
-                sh 'docker run -d -p 8080:80 --name ecocycle ecocycle-website'
+                sh 'docker run -d -p 8000:80 --name ecocycle ecocycle-website'
             }
         }
     }
