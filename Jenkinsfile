@@ -5,7 +5,7 @@ pipeline {
 
         stage('Clone Repository') {
             steps {
-                git 'https://github.com/aditi7734/EcoCycle.git'
+                 git 'https://github.com/Aditi7734/ecowaste'
             }
         }
 
